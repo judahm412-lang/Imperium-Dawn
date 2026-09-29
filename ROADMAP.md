@@ -1,11 +1,11 @@
 # Roadmap
 
 ## Next five tasks
-1. Complete visible M1 desktop verification and hosted CI; headless and dummy-driver checks passed.
-2. Verify M2 desktop movement, founding, fog and resource panels.
-3. Add debug state inspection and coherent terrain generation.
-4. Complete milestone acceptance, demos and release tags.
-5. Begin M3 resource spending, buildings and production queues.
+1. Confirm hosted CI for terrain/debug work and finalize milestone acceptance.
+2. Verify camera pan/zoom and record milestone release tags.
+3. Add M3 settlement buildings and resource spending.
+4. Add production queues and population growth.
+5. Simulate 100 economy turns and review scope after M3.
 
 | Milestone | Status | Deliverables and acceptance |
 | --- | --- | --- |
@@ -17,7 +17,7 @@
 | M6 AI | planned | Three distinct opponents. Complete headless games and reproducible decisions. Scope review. |
 | M7 Diplomacy | planned | Relations, treaties, trade, war, reputation. AI reacts and agreements enforce effects. |
 | M8 Victory | planned | Three victories, setup, difficulty. Full matches reach documented end conditions. |
-| M9 Polish | planned | Audio hooks, animation, help, settings, keybinds. Profile against 60 FPS at 1280x720 on recorded hardware. Scope review. |
+| M9 Polish | planned | Audio hooks, animation, help, settings, keybinds, standalone Linux AppImage/runfile. Bundle launches without system Python and preserves user saves. Profile against 60 FPS at 1280x720 on recorded hardware. Scope review. |
 | M10 Balance | planned | 100+ AI matches and findings in docs/balance. Tune dominant strategies using measured outcomes. |
 | M11+ Expansion | planned | Choose events, wonders, espionage, culture, history, mods or editor from feedback and ideas. Define acceptance before implementation. |
 

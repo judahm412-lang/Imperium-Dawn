@@ -2,7 +2,7 @@
 from dataclasses import dataclass, field
 import json
 from pathlib import Path
-import random
+from .terrain import generate_tiles
 
 TERRAINS = ('water', 'plain', 'forest', 'mountain')
 YIELDS = {'plain': (3, 1), 'forest': (1, 3), 'mountain': (0, 2), 'water': (1, 0)}
@@ -125,8 +125,7 @@ class World:
 def generate(seed=42, width=64, height=40):
     if type(width) is not int or type(height) is not int or not 1 <= width <= 256 or not 1 <= height <= 256:
         raise ValueError('Map dimensions must be integers between 1 and 256')
-    rng = random.Random(seed)
-    world = World(seed, width, height, rng.choices(TERRAINS, weights=(18, 48, 25, 9), k=width * height))
+    world = World(seed, width, height, generate_tiles(seed, width, height))
     world.start()
     world.validate()
     return world

@@ -10,3 +10,6 @@ Accept the user's request to begin development after authentication. First ship 
 
 ## 2026-09-28 — Direct main workflow and M2 rules
 User requested direct commits to main. Run tests before each commit/push; no future feature branches or PRs. M2 starts with one pioneer, two movement points per turn, forests costing two, and impassable water/mountains. Founding consumes the pioneer. Settlements collect yields from their tile and four adjacent tiles. Population, queues, recruitment and spending belong to M3. Save version 2 persists game state and migrates version 1 maps by adding a pioneer.
+
+## 2026-09-28 — Linux distribution readiness
+Plan standalone Linux distribution for M9. Keep Python and the standard-library simulation boundary. Store desktop saves in XDG user data, independent of working directory or a read-only installation. Select the bundler after desktop dependencies stabilize; acceptance requires launch without a system Python installation and persistent user saves. Terrain uses seeded interpolated elevation/moisture fields; this is geographic coherence, not a climate simulation.

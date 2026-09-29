@@ -1,7 +1,8 @@
 """Desktop map viewer. All game state lives in sim."""
-from pathlib import Path
 import pygame
 from .sim import World
+from .storage import save_path
+from .debug import execute
 
 COLORS = {'water': '#25465b', 'plain': '#aa9b66', 'forest': '#486e57', 'mountain': '#777780'}
 
@@ -16,20 +17,21 @@ def run(world, frames=None):
     running, count = True, 0
     message = 'Click a neighboring tile to move; B founds your first settlement'
     selected = world.unit if world.unit is not None else 0
-    save_path = Path('savegame.json')
+    debug_overlay, console, command = False, False, ''
+    save_file = None
     try:
         while running:
             dt = clock.tick(60) / 1000
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-                elif event.type == pygame.MOUSEWHEEL:
+                elif event.type == pygame.MOUSEWHEEL and not console:
                     mx, my = pygame.mouse.get_pos()
                     new_zoom = max(6, min(80, zoom * 1.15 ** event.y))
                     x = mx - (mx - x) * new_zoom / zoom
                     y = my - (my - y) * new_zoom / zoom
                     zoom = new_zoom
-                elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and event.pos[1] >= 106:
+                elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and event.pos[1] >= 106 and not console:
                     col = int((event.pos[0] - x) // zoom)
                     row = int((event.pos[1] - y) // zoom)
                     if 0 <= col < world.width and 0 <= row < world.height:
@@ -40,7 +42,25 @@ def run(world, frames=None):
                         except ValueError as error:
                             message = str(error)
                 elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
+                    if event.key == pygame.K_BACKQUOTE:
+                        console = not console
+                        command = ''
+                    elif console:
+                        if event.key == pygame.K_ESCAPE:
+                            console = False
+                        elif event.key == pygame.K_BACKSPACE:
+                            command = command[:-1]
+                        elif event.key == pygame.K_RETURN:
+                            try:
+                                message = execute(world, command)
+                            except ValueError as error:
+                                message = str(error)
+                            command = ''
+                        elif event.unicode and event.unicode.isprintable():
+                            command = (command + event.unicode)[:100]
+                    elif event.key == pygame.K_F3:
+                        debug_overlay = not debug_overlay
+                    elif event.key == pygame.K_ESCAPE:
                         running = False
                     elif event.key == pygame.K_SPACE:
                         world.advance()
@@ -52,19 +72,20 @@ def run(world, frames=None):
                             message = str(error)
                     elif event.key == pygame.K_F5:
                         try:
-                            world.save(save_path)
-                            message = 'Saved to savegame.json'
+                            save_file = save_path()
+                            world.save(save_file)
+                            message = f'Saved: {save_file}'
                         except OSError as error:
                             message = f'Save failed: {error}'
                     elif event.key == pygame.K_F9:
                         try:
-                            world = World.load(save_path)
+                            world = World.load(save_path())
                             message = 'Loaded savegame.json'
                         except (OSError, ValueError, TypeError, KeyError) as error:
                             message = f'Load failed: {error}'
             keys = pygame.key.get_pressed()
-            x += (keys[pygame.K_LEFT] - keys[pygame.K_RIGHT]) * 450 * dt
-            y += (keys[pygame.K_UP] - keys[pygame.K_DOWN]) * 450 * dt
+            x += (not console) * (keys[pygame.K_LEFT] - keys[pygame.K_RIGHT]) * 450 * dt
+            y += (not console) * (keys[pygame.K_UP] - keys[pygame.K_DOWN]) * 450 * dt
             screen.fill('#131e2a')
             visible, explored = world.visible(), set(world.explored)
             for row in range(world.height):
@@ -94,6 +115,13 @@ def run(world, frames=None):
                 lines.append(f'Survey: {world.tiles[selected]} | Known local yield: {food} food, {materials} materials / turn')
             for i, line in enumerate(lines):
                 screen.blit(font.render(line, True, '#e8debf'), (18, 9 + i * 24))
+            if debug_overlay or console:
+                panel = pygame.Rect(12, screen.get_height() - 95, screen.get_width() - 24, 83)
+                pygame.draw.rect(screen, '#101820', panel)
+                debug_lines = [f'DEBUG | FPS {clock.get_fps():.0f} | Camera ({x:.0f}, {y:.0f}) | Zoom {zoom:.1f}',
+                               execute(world, 'state'), '> ' + command if console else 'F3: overlay | Backtick: cheat console']
+                for i, line in enumerate(debug_lines):
+                    screen.blit(font.render(line, True, '#e8debf'), (panel.x + 10, panel.y + 8 + i * 23))
             pygame.display.flip()
             count += 1
             if frames is not None and count >= frames:
