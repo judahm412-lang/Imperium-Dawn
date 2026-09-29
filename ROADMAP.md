@@ -1,7 +1,7 @@
 # Roadmap
 
 ## Next five tasks
-1. Complete M1 desktop and headless verification.
+1. Complete visible M1 desktop verification and hosted CI; headless and dummy-driver checks passed.
 2. Add turn commands and unit movement (M2).
 3. Add settlements and resource production (M2).
 4. Add fog of war and selection panels (M2).
