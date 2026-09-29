@@ -1,0 +1,10 @@
+# Architecture
+
+`imperium/sim.py`: standard-library state, seeded map generation, turn progression, versioned JSON persistence.
+`imperium/client.py`: pygame window, camera, map rendering, keyboard input.
+`imperium/__main__.py`: CLI selecting desktop or headless execution.
+`tests/`: simulation determinism, persistence, validation, headless smoke checks.
+
+Data flow: CLI creates/loads state → client or headless runner advances state → persistence writes JSON. Rendering reads state and never owns simulation rules.
+
+Run, test, and profile commands live in README.md. M1 turns count time only; units and resource rules start in M2.
