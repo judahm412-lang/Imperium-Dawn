@@ -2,15 +2,15 @@
 
 ## Next five tasks
 1. Complete visible M1 desktop verification and hosted CI; headless and dummy-driver checks passed.
-2. Add turn commands and unit movement (M2).
-3. Add settlements and resource production (M2).
-4. Add fog of war and selection panels (M2).
-5. Ship a distinctive terrain survey tool (M2 original idea).
+2. Verify M2 desktop movement, founding, fog and resource panels.
+3. Add debug state inspection and coherent terrain generation.
+4. Complete milestone acceptance, demos and release tags.
+5. Begin M3 resource spending, buildings and production queues.
 
 | Milestone | Status | Deliverables and acceptance |
 | --- | --- | --- |
 | M1 Walking skeleton | in progress | Window, square map, pan/zoom, seeded generation, versioned save/load, headless runner, CI. Determinism and round-trip tests pass; desktop smoke check succeeds. |
-| M2 Core loop | planned | Turns, movement, fog, settlements, production, panels. A player can establish a settlement and play 20 turns. |
+| M2 Core loop | in progress | Turns, movement, fog, settlements, production, panels. A player can establish a settlement and play 20 turns. |
 | M3 Economy | planned | Resources, buildings, population, queues. Costs and outputs tested; economy survives 100 turns. Scope review. |
 | M4 Progression | planned | 40+ data-driven technologies. Unlocks alter gameplay and dependency validation passes. |
 | M5 Combat | planned | Unit roles, terrain modifiers, previews and logs. Resolution matches previews and tests. |

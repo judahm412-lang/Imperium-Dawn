@@ -10,8 +10,8 @@ never let the project rot.
 - Work in a git repo and push to GitHub regularly (origin will be set up by
   me; if push fails, tell me exactly what you need, then keep committing locally).
 - Small commits, clear messages (conventional commits: feat:, fix:, refactor:,
-  test:, docs:). Work on feature branches and open PRs into `main` for
-  anything bigger than a trivial change. Write real PR descriptions.
+  test:, docs:). Commit directly to `main` and push after passing checks, per the user
+  instruction on 2026-09-28. Do not create feature branches or PRs for future work.
 - Never leave `main` broken. Tests must pass before merging.
 - Prefer boring, readable code. Refactor when a system gets painful, and log why.
 - Ask me questions only when truly blocked. Otherwise make a decision, write it

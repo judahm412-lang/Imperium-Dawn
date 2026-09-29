@@ -31,3 +31,11 @@ SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy .venv/bin/python -m imperium --frame
 ```
 
 For a visible demo, launch the client, pan and zoom, advance five turns, save, advance again, then reload and verify turn five returns. Profile simulation with `python3 -m cProfile -s cumulative -m imperium --headless --turns 100000`.
+
+## M2 core loop
+
+The gold circle is your pioneer. Click an adjacent plain or forest tile to move. Plains cost one movement point, forests two; water and mountains block movement. Space ends the turn and restores two movement points. Dark terrain is unexplored; dim terrain has been explored but is outside current vision.
+
+Press B to found your settlement, consuming the pioneer. Each turn collects food and materials from the settlement and its four neighboring tiles. Click explored tiles to see their known local yield forecast. Resources accumulate; buildings and spending are planned for M3. F5/F9 preserve movement, exploration, settlements, and resources. Version 1 saves migrate automatically.
+
+Demo: move the pioneer, press Space, choose a site using the survey, press B, then play twenty turns. Save, advance, reload, and verify the resources and turn return.
